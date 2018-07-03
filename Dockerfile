@@ -11,7 +11,7 @@
 # Installs dependencies dcm2niix, AFNI, FSL 5.0.9, and FreeSurfer 6.0.0
 ##
 
-FROM debian:stretch
+FROM ubuntu:16.04
 
 ARG DEBIAN_FRONTEND="noninteractive"
 
@@ -65,44 +65,44 @@ RUN apt-get update -qq \
     && rm -rf /tmp/dcm2niix
 
 # Install AFNI
-ENV PATH="/opt/afni-latest:$PATH" \
-    AFNI_PLUGINPATH="/opt/afni-latest"
-RUN apt-get update -qq \
-    && apt-get install -y -q --no-install-recommends \
-           ed \
-           gsl-bin \
-           libglib2.0-0 \
-           libglu1-mesa-dev \
-           libglw1-mesa \
-           libgomp1 \
-           libjpeg62 \
-           libxm4 \
-           netpbm \
-           tcsh \
-           xfonts-base \
-           xvfb \
-           wget \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && curl -sSL --retry 5 -o /tmp/toinstall.deb http://mirrors.kernel.org/debian/pool/main/libx/libxp/libxp6_1.0.2-2_amd64.deb \
-    && dpkg -i /tmp/toinstall.deb \
-    && rm /tmp/toinstall.deb \
-    && curl -sSL --retry 5 -o /tmp/toinstall.deb http://mirrors.kernel.org/debian/pool/main/libp/libpng/libpng12-0_1.2.49-1%2Bdeb7u2_amd64.deb \
-    && dpkg -i /tmp/toinstall.deb \
-    && rm /tmp/toinstall.deb \
-    && apt-get install -f \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && gsl2_path="$(find / -name 'libgsl.so.19' || printf '')" \
-    && if [ -n "$gsl2_path" ]; then \
-         ln -sfv "$gsl2_path" "$(dirname $gsl2_path)/libgsl.so.0"; \
-    fi \
-    && ldconfig \
-    && echo "Downloading AFNI..." \
-    && mkdir -p /opt/afni-latest \
-    && wget --progress=bar:force -O /tmp/linux_openmp_64.tgz https://afni.nimh.nih.gov/pub/dist/tgz/linux_openmp_64.tgz 
-RUN tar -xzvf /tmp/linux_openmp_64.tgz -C /opt/afni-latest --strip-components 1 && \
-    rm /tmp/linux_openmp_64.tgz
+#ENV PATH="/opt/afni-latest:$PATH" \
+#    AFNI_PLUGINPATH="/opt/afni-latest"
+#RUN apt-get update -qq \
+#    && apt-get install -y -q --no-install-recommends \
+#           ed \
+#           gsl-bin \
+#           libglib2.0-0 \
+#           libglu1-mesa-dev \
+#           libglw1-mesa \
+#           libgomp1 \
+#           libjpeg62 \
+#           libxm4 \
+#           netpbm \
+#           tcsh \
+#           xfonts-base \
+#           xvfb \
+#           wget \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+#    && curl -sSL --retry 5 -o /tmp/toinstall.deb http://mirrors.kernel.org/debian/pool/main/libx/libxp/libxp6_1.0.2-2_amd64.deb \
+#    && dpkg -i /tmp/toinstall.deb \
+#    && rm /tmp/toinstall.deb \
+#    && curl -sSL --retry 5 -o /tmp/toinstall.deb http://mirrors.kernel.org/debian/pool/main/libp/libpng/libpng12-0_1.2.49-1%2Bdeb7u2_amd64.deb \
+#    && dpkg -i /tmp/toinstall.deb \
+#    && rm /tmp/toinstall.deb \
+#    && apt-get install -f \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+#    && gsl2_path="$(find / -name 'libgsl.so.19' || printf '')" \
+#    && if [ -n "$gsl2_path" ]; then \
+#         ln -sfv "$gsl2_path" "$(dirname $gsl2_path)/libgsl.so.0"; \
+#    fi \
+#    && ldconfig \
+#    && echo "Downloading AFNI..." \
+#    && mkdir -p /opt/afni-latest \
+#    && wget --progress=bar:force -O /tmp/linux_openmp_64.tgz https://afni.nimh.nih.gov/pub/dist/tgz/linux_openmp_64.tgz 
+#RUN tar -xzvf /tmp/linux_openmp_64.tgz -C /opt/afni-latest --strip-components 1 && \
+#    rm /tmp/linux_openmp_64.tgz
 
 # Install FSL
 ENV FSLDIR="/opt/fsl-5.0.9" \
