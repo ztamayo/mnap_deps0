@@ -118,7 +118,6 @@ RUN apt-get update -qq \
            libglu1-mesa-dev \
            libgomp1 \
            libice6 \
-           libmng1 \
            libxcursor1 \
            libxft2 \
            libxinerama1 \
