@@ -32,6 +32,8 @@ RUN apt-get update -qq \
            bc \
            dc \
            file \
+           perl \
+           tcsh \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && chmod 777 /opt && chmod a+s /opt 
@@ -86,6 +88,13 @@ RUN apt-get update -qq \
            zlib1g \
            libqtgui4 \
            libqtwebkit4 \
+           libxmu6 \
+           libxm4  \
+           libglw1-mesa \
+           libglib2.0-0 \
+           libjpeg62 \
+           libssl1.0.0 \
+           libssl-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && echo "Downloading FSL..." \
@@ -97,14 +106,6 @@ RUN apt-get update -qq \
 
 # Install FreeSurfer
 RUN apt-get update -qq \
-    && apt-get clean \
-    && apt-get install -y -q --no-install-recommends \
-           bc \
-           libgomp1 \
-           libxmu6 \
-           libxt6 \
-           perl \
-           tcsh \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && echo "Downloading FreeSurfer..." \
@@ -129,17 +130,9 @@ CMD ["bash"]
 #    && apt-get install -y -q --no-install-recommends \
 #           ed \
 #           gsl-bin \
-#           libglib2.0-0 \
-#           libglu1-mesa-dev \
-#           libglw1-mesa \
-#           libgomp1 \
-#           libjpeg62 \
-#           libxm4 \
 #           netpbm \
-#           tcsh \
 #           xfonts-base \
 #           xvfb \
-#           wget \
 #    && apt-get clean \
 #    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
 #    && curl -sSL --retry 5 -o /tmp/toinstall.deb http://mirrors.kernel.org/debian/pool/main/libx/libxp/libxp6_1.0.2-2_amd64.deb \
