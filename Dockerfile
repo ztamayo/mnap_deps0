@@ -54,10 +54,11 @@ RUN mkdir -p /tmp/dcm2niix \
 # Set FreeSurfer path
 ENV FREESURFER_HOME="/opt/freesurfer-6.0/freesurfer" \
     PATH="/opt/freesurfer-6.0/freesurfer/bin:$PATH" \
-# Set FSL path and install
+# Set FSL path
     FSLDIR="/opt/fsl-5.0.9" \
     PATH="/opt/fsl-5.0.9/bin:$PATH"
 RUN apt-get update -qq \
+# Install shared libraries
     && apt-get install -y -q --no-install-recommends \
            zlib1g-dev \
            libfontconfig1 \
@@ -95,8 +96,21 @@ RUN apt-get update -qq \
            libjpeg62 \
            libssl1.0.0 \
            libssl-dev \
+    && wget --progress=bar:force -O /tmp/gcc-6-base_6.4.0-17ubuntu1_amd64.deb http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/gcc-6-base_6.4.0-17ubuntu1_amd64.deb \
+    && dpkg -i /tmp/gcc-6-base_6.4.0-17ubuntu1_amd64.deb \
+    && rm /tmp/gcc-6-base_6.4.0-17ubuntu1_amd64.deb \
+    && wget --progress=bar:force -O /tmp/libgfortran3_6.4.0-17ubuntu1_amd64.deb http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/libgfortran3_6.4.0-17ubuntu1_amd64.deb \
+    && dpkg -i /tmp/libgfortran3_6.4.0-17ubuntu1_amd64.deb \
+    && rm /tmp/libgfortran3_6.4.0-17ubuntu1_amd64.deb \
+    && wget --progress=bar:force -O /tmp/libhdf5-serial-1.8.4_1.8.4-patch1-3ubuntu2_amd64.deb http://security.ubuntu.com/ubuntu/pool/universe/h/hdf5/libhdf5-serial-1.8.4_1.8.4-patch1-3ubuntu2_amd64.deb \
+    && dpkg -i /tmp/libhdf5-serial-1.8.4_1.8.4-patch1-3ubuntu2_amd64.deb \
+    && rm /tmp/libhdf5-serial-1.8.4_1.8.4-patch1-3ubuntu2_amd64.deb \
+    && wget --progress=bar:force -O /tmp/libnetcdf6_4.1.1-6_amd64.deb http://security.ubuntu.com/ubuntu/pool/universe/n/netcdf/libnetcdf6_4.1.1-6_amd64.deb \
+    && dpkg -i /tmp/libnetcdf6_4.1.1-6_amd64.deb \
+    && rm /tmp/libnetcdf6_4.1.1-6_amd64.deb \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+# Install FSL
     && echo "Downloading FSL..." \
     && mkdir -p /opt/fsl-5.0.9 \
     && wget --progress=bar:force -O /tmp/fsl-5.0.9-centos6_64.tar.gz https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-5.0.9-centos6_64.tar.gz \
