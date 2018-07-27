@@ -10,7 +10,7 @@
 # Installs dependencies dcm2niix, AFNI (removed), FSL 5.0.9, and FreeSurfer 6.0.0
 ##
 
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 RUN apt-get update -qq \
     && apt-get clean \
@@ -27,9 +27,11 @@ RUN apt-get update -qq \
            git \
            make \
            pigz \
-           zlib1g-dev \
            wget \
            vim \
+           bc \
+           dc \
+           file \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && chmod 777 /opt && chmod a+s /opt 
@@ -55,9 +57,7 @@ ENV FREESURFER_HOME="/opt/freesurfer-6.0/freesurfer" \
     PATH="/opt/fsl-5.0.9/bin:$PATH"
 RUN apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
-           bc \
-           dc \
-           file \
+           zlib1g-dev \
            libfontconfig1 \
            libfreetype6 \
            libgl1-mesa-dev \
@@ -70,6 +70,22 @@ RUN apt-get update -qq \
            libxrandr2 \
            libxrender1 \
            libxt6 \
+           libc6 \
+           libftgl2 \
+           libgcc1 \
+           libgl1-mesa-glx \
+           libgl1 \
+           libglu1-mesa \
+           libglu1 \
+           libosmesa6 \
+           libqt4-network \
+           libqt4-opengl \
+           libqt4-xml \
+           libqtcore4 \
+           libstdc++6 \
+           zlib1g \
+           libqtgui4 \
+           libqtwebkit4 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && echo "Downloading FSL..." \
